@@ -175,16 +175,56 @@ body{font-family:var(--font);background:var(--page);color:var(--gray900);line-he
   .pillar,.fstep,.sgia-card,.prin-card,.aq{break-inside:avoid;box-shadow:none!important}
   .hero-top::before,.hero-top::after{display:none}
 }
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:860px){
+  .dl-bar{padding:10px 16px;flex-wrap:wrap;gap:8px}
+  .dl-bar-info span{font-size:11px}
+  .dl-btns{gap:6px;width:100%}
+  .dl-btn{flex:1;justify-content:center;padding:7px 10px;font-size:12px}
+  .page{padding:20px 14px 48px}
+  .hero-top{padding:22px 20px 18px}
+  .hero-row{flex-direction:column;gap:14px}
+  .hero-logo{width:52px;height:52px}
+  .hero-title h1{font-size:22px}
+  .hero-title p{font-size:13px}
+  .hero-bottom{padding:14px 16px;flex-wrap:wrap;gap:8px}
+  .hstat{min-width:80px;flex:1}
+  .hstat .n{font-size:20px}
+  .hstat .l{font-size:10px}
+  .sdiv h2{font-size:10px;letter-spacing:.06em}
+  .prin-grid{grid-template-columns:1fr 1fr}
+  .pillars{grid-template-columns:1fr}
+  .flow{flex-direction:column;gap:0}
+  .fstep{border-radius:0!important;border-left:1.5px solid var(--gray100)!important}
+  .fstep:first-child{border-radius:var(--r16) var(--r16) 0 0!important}
+  .fstep:last-child{border-radius:0 0 var(--r16) var(--r16)!important}
+  .fstep+.fstep{border-left:1.5px solid var(--gray100)!important;border-top:none}
+  .farrow{width:100%;height:22px;border-top:none;border-left:1.5px solid var(--gray100);border-right:1.5px solid var(--gray100);border-bottom:none}
+  .farrow svg{transform:rotate(90deg)}
+  .sgia-grid{grid-template-columns:1fr 1fr}
+  .audit-grid{grid-template-columns:1fr}
+  .def-card{flex-direction:column;gap:12px}
+  .def-icon{width:40px;height:40px}
+}
+@media(max-width:520px){
+  .prin-grid{grid-template-columns:1fr}
+  .sgia-grid{grid-template-columns:1fr 1fr}
+  .hero-title h1{font-size:19px}
+  .htag{font-size:10px;padding:3px 9px}
+  nav>div{flex-wrap:wrap;height:auto;padding:10px 0;gap:8px}
+}
+
 </style>
 </head>
 <body>
-<nav style="background:rgba(42,95,12,.97);padding:0 32px;position:sticky;top:0;z-index:999;box-shadow:0 2px 16px rgba(0,0,0,.2)">
-  <div style="max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px">
+<nav style="background:rgba(42,95,12,.97);padding:0 20px;position:sticky;top:0;z-index:999;box-shadow:0 2px 16px rgba(0,0,0,.2)">
+  <div style="max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;min-height:52px;gap:10px;flex-wrap:wrap;padding:8px 0">
     <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:rgba(255,255,255,.85);font-size:13px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
       Inicio
     </a>
-    <div style="display:flex;gap:6px">
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
       <a href="cuestionario.html" style="padding:6px 14px;border-radius:7px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);text-decoration:none;font-size:12.5px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif">❓ Cuestionario</a>
       <a href="checklist.html" style="padding:6px 14px;border-radius:7px;background:#52b520;color:#fff;text-decoration:none;font-size:12.5px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif">✅ Checklist</a>
     </div>

@@ -163,13 +163,55 @@ body{font-family:var(--font);background:var(--page);color:var(--gray900);line-he
   .check-item,.score-panel,.machine-card{box-shadow:none!important}
   .hdr{border-radius:12px}
 }
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:860px){
+  .action-bar{padding:10px 14px;flex-wrap:wrap;gap:8px}
+  .ab-info span{font-size:11px}
+  .ab-btns{width:100%;justify-content:flex-end;gap:6px}
+  .ab-btn{padding:7px 12px;font-size:12px}
+  .page{padding:20px 12px 52px}
+  .hdr-body{padding:22px 20px 18px}
+  .hdr-row{flex-direction:column;gap:12px}
+  .hdr-ic{width:50px;height:50px}
+  .hdr-txt h1{font-size:21px}
+  .hdr-txt p{font-size:13px}
+  .hdr-foot{padding:12px 16px;flex-wrap:wrap;gap:6px}
+  .hstat{min-width:80px;flex:1}
+  .hstat .n{font-size:18px}
+  .hstat .l{font-size:9px}
+  .score-panel{gap:16px;padding:18px 16px;flex-direction:column}
+  .score-circle-wrap{margin:0 auto}
+  .score-verdict{margin:0 auto}
+  .score-counters{justify-content:center}
+  .sc-item{padding:8px 12px;min-width:70px}
+  .form-grid{grid-template-columns:1fr}
+  .form-grid-2{grid-template-columns:1fr}
+  .tipo-btns{flex-wrap:wrap}
+  .tipo-btn{flex:1;min-width:120px}
+  .machine-card{padding:18px 16px}
+  .ci-body{flex-wrap:wrap;gap:10px}
+  .ci-radios{width:100%;justify-content:flex-start;padding-top:4px;border-top:1px dashed var(--gray100)}
+  .cir-btn{flex:1;justify-content:center;font-size:12px;padding:7px 10px}
+  .obs-card{padding:18px 16px}
+  .sdiv h3{font-size:10px;letter-spacing:.07em}
+  .check-item{padding:0}
+}
+@media(max-width:540px){
+  .hdr-txt h1{font-size:18px}
+  .score-counters{gap:8px}
+  .sc-item .v{font-size:18px}
+  .cir-btn{font-size:11.5px;padding:6px 8px}
+  .ab-btn-danger{display:none}
+}
+
 </style>
 </head>
 <body>
 
 <!-- ─── ACTION BAR ─── -->
 <div class="action-bar">
-  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:7px;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='transparent'">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:7px;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='transparent'" style="flex-shrink:0">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
         Inicio
       </a>

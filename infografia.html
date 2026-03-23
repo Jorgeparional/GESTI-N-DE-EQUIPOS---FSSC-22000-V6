@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Gestión de Equipos — FSSC 22000 v6</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g900:#1a3d05;--g800:#2a5f0c;--g700:#357a10;--g600:#3f9214;--g500:#52b520;--g400:#74cc40;--g300:#9ddc70;--g200:#c6edab;--g100:#e4f7d0;--g50:#f2fbe8;
+  --t800:#084033;--t600:#0d6b55;--t400:#13a07e;--t200:#82ddc5;--t100:#c5f0e4;--t50:#edfaf5;
+  --a800:#6b3500;--a600:#b05800;--a400:#e07815;--a200:#f5b870;--a100:#fde8c5;--a50:#fff7ed;
+  --b800:#0a2d5e;--b600:#1050a0;--b400:#2b7fd4;--b200:#8dc4ef;--b100:#d0e9f9;--b50:#edf6fd;
+  --r600:#991a1a;--r400:#dd3333;--r100:#fdd0d0;--r50:#fef2f2;
+  --p600:#4a3bb5;--p400:#7b6fd4;--p100:#dddaf9;--p50:#f2f1fe;
+  --gray900:#1c1c1a;--gray800:#2e2e2b;--gray600:#595955;--gray400:#8a8a85;--gray200:#d0cfc8;--gray100:#e8e7e0;--gray50:#f6f5f0;
+  --white:#ffffff;--page:#f0ede6;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --r12:12px;--r16:16px;--r20:20px;
+  --sh:0 2px 12px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.05);
+  --sh-md:0 4px 24px rgba(0,0,0,.1),0 2px 6px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--page);color:var(--gray900);line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+/* ═══ DOWNLOAD BAR ═══ */
+.dl-bar{background:var(--g800);padding:11px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 16px rgba(0,0,0,.25)}
+.dl-bar-info{display:flex;align-items:center;gap:10px}
+.dl-bar-info .dot{width:8px;height:8px;background:var(--g400);border-radius:50%}
+.dl-bar-info span{font-size:12.5px;color:var(--g200);font-weight:500}
+.dl-btns{display:flex;gap:8px}
+.dl-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font);border:none;transition:all .15s;letter-spacing:.01em}
+.dl-btn-primary{background:var(--white);color:var(--g800)}
+.dl-btn-primary:hover{background:var(--g100);box-shadow:var(--sh)}
+.dl-btn-ghost{background:rgba(255,255,255,.1);color:var(--g200);border:1px solid rgba(255,255,255,.2)}
+.dl-btn-ghost:hover{background:rgba(255,255,255,.18)}
+
+/* ═══ PAGE ═══ */
+.page{max-width:1060px;margin:0 auto;padding:36px 24px 64px}
+
+/* ═══ HERO ═══ */
+.hero{background:linear-gradient(135deg,var(--g800) 0%,var(--g700) 40%,var(--t800) 100%);border-radius:24px;padding:0;margin-bottom:28px;overflow:hidden;position:relative;box-shadow:var(--sh-md)}
+.hero-top{padding:36px 44px 28px;position:relative;z-index:1}
+.hero-top::before{content:'';position:absolute;right:-80px;top:-80px;width:360px;height:360px;background:rgba(255,255,255,.03);border-radius:50%;pointer-events:none}
+.hero-top::after{content:'';position:absolute;right:60px;bottom:-100px;width:220px;height:220px;background:rgba(255,255,255,.03);border-radius:50%;pointer-events:none}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.htag{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:1.5px solid}
+.htag-main{background:var(--g500);border-color:var(--g400);color:#fff}
+.htag-outline{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.8)}
+.hero-row{display:flex;align-items:flex-start;gap:20px}
+.hero-logo{width:66px;height:66px;background:rgba(255,255,255,.12);border-radius:18px;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero-title h1{font-size:31px;font-weight:800;color:#fff;line-height:1.15;margin-bottom:8px}
+.hero-title p{font-size:14px;color:rgba(255,255,255,.72);line-height:1.65;max-width:600px}
+.hero-title p strong{color:rgba(255,255,255,.95)}
+.hero-bottom{background:rgba(0,0,0,.2);padding:18px 44px;display:flex;gap:0;border-top:1px solid rgba(255,255,255,.1)}
+.hstat{flex:1;text-align:center;padding:4px 0;position:relative}
+.hstat+.hstat::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:32px;width:1px;background:rgba(255,255,255,.15)}
+.hstat .n{font-size:28px;font-weight:800;color:var(--g400);line-height:1}
+.hstat .l{font-size:11px;color:rgba(255,255,255,.6);margin-top:4px;font-weight:500;line-height:1.3}
+
+/* ═══ SECTION DIVIDER ═══ */
+.sdiv{display:flex;align-items:center;gap:10px;margin:28px 0 14px}
+.sdiv-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sdiv h2{font-size:12px;font-weight:800;color:var(--gray600);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
+.sdiv-line{flex:1;height:1.5px;background:var(--gray200)}
+
+/* ═══ DEF CARD ═══ */
+.def-card{background:var(--white);border-radius:var(--r16);padding:20px 24px;border:1.5px solid var(--gray100);box-shadow:var(--sh);display:flex;gap:16px;align-items:flex-start;margin-bottom:10px}
+.def-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--g50);border:1.5px solid var(--g200)}
+.def-body .dt{font-size:11px;font-weight:800;color:var(--g700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.def-body p{font-size:13.5px;color:var(--gray600);line-height:1.65}
+.def-body p strong{color:var(--gray900);font-weight:700}
+
+/* ═══ ALERT ═══ */
+.alert{border-radius:var(--r12);padding:14px 18px;display:flex;gap:12px;margin-bottom:10px;border:1.5px solid}
+.alert-amber{background:var(--a50);border-color:var(--a200)}
+.alert svg{flex-shrink:0;margin-top:1px}
+.alert p{font-size:13px;color:var(--a800);line-height:1.6}
+.alert p strong{font-weight:700}
+
+/* ═══ PRINCIPLES ═══ */
+.prin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+.prin-card{background:var(--white);border-radius:var(--r12);padding:16px;border:1.5px solid var(--gray100);box-shadow:var(--sh);display:flex;gap:12px;align-items:flex-start;transition:transform .2s,box-shadow .2s}
+.prin-card:hover{transform:translateY(-2px);box-shadow:var(--sh-md)}
+.prin-ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prin-card h4{font-size:13px;font-weight:700;color:var(--gray900);margin-bottom:4px}
+.prin-card p{font-size:11.5px;color:var(--gray600);line-height:1.5}
+
+/* ═══ PILLARS ═══ */
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px}
+.pillar{background:var(--white);border-radius:var(--r16);overflow:hidden;box-shadow:var(--sh);border:1.5px solid var(--gray100)}
+.pillar-head{padding:18px 22px 16px;display:flex;gap:14px;align-items:flex-start}
+.ph-green{background:linear-gradient(120deg,var(--g50),var(--g100));border-bottom:2px solid var(--g300)}
+.ph-teal{background:linear-gradient(120deg,var(--t50),var(--t100));border-bottom:2px solid var(--t200)}
+.pillar-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pic-green{background:var(--g700)}
+.pic-teal{background:var(--t800)}
+.pillar-code{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.pc-green{color:var(--g700)}
+.pc-teal{color:var(--t800)}
+.pillar-head h3{font-size:15px;font-weight:700;color:var(--gray900);line-height:1.2}
+.pillar-head .sub{font-size:12px;color:var(--gray400);margin-top:3px}
+.pillar-body{padding:16px 22px 20px}
+.ri{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.ri:last-child{margin-bottom:0}
+.ri-dot{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ri-green{background:var(--g50);border:1px solid var(--g200)}
+.ri-teal{background:var(--t50);border:1px solid var(--t200)}
+.ri p{font-size:12.5px;color:var(--gray600);line-height:1.55}
+.ri p strong{color:var(--gray900);font-weight:700}
+
+/* ═══ FLOW ═══ */
+.flow{display:flex;align-items:stretch;margin-bottom:10px;gap:0}
+.fstep{flex:1;background:var(--white);border:1.5px solid var(--gray100);padding:16px 13px 14px;box-shadow:var(--sh);transition:transform .2s}
+.fstep:hover{transform:translateY(-2px)}
+.fstep:first-child{border-radius:var(--r16) 0 0 var(--r16)}
+.fstep:last-child{border-radius:0 var(--r16) var(--r16) 0}
+.fstep+.fstep{border-left:none}
+.fstep-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.fnum{width:26px;height:26px;border-radius:50%;background:var(--g700);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fic{width:30px;height:30px;border-radius:8px;background:var(--g50);border:1px solid var(--g200);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fstep h4{font-size:12.5px;font-weight:700;color:var(--g800);line-height:1.25;margin-bottom:6px}
+.fstep p{font-size:11px;color:var(--gray600);line-height:1.5;margin-bottom:8px}
+.fbadge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.04em;border:1.5px solid}
+.fb-green{background:var(--g50);color:var(--g700);border-color:var(--g300)}
+.fb-blue{background:var(--b50);color:var(--b800);border-color:var(--b200)}
+.fb-amber{background:var(--a50);color:var(--a800);border-color:var(--a200)}
+.farrow{width:24px;background:var(--g50);border-top:1.5px solid var(--gray100);border-bottom:1.5px solid var(--gray100);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ═══ SGIA ═══ */
+.sgia-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+.sgia-card{background:var(--white);border-radius:var(--r12);padding:16px 13px;border:1.5px solid var(--gray100);text-align:center;box-shadow:var(--sh);transition:transform .2s,box-shadow .2s}
+.sgia-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md)}
+.sgia-ic{width:46px;height:46px;border-radius:12px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center}
+.sgia-card h4{font-size:12.5px;font-weight:700;color:var(--gray900);margin-bottom:5px;line-height:1.3}
+.sgia-card p{font-size:11px;color:var(--gray500,var(--gray600));line-height:1.45}
+
+/* ═══ AUDIT ═══ */
+.audit-wrap{background:var(--white);border-radius:var(--r16);padding:22px 26px;border:1.5px solid var(--gray100);box-shadow:var(--sh)}
+.audit-header{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.audit-header .aic{width:42px;height:42px;background:var(--g50);border:1.5px solid var(--g200);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.audit-header h3{font-size:15px;font-weight:700;color:var(--gray900)}
+.audit-header p{font-size:12px;color:var(--gray400);margin-top:2px}
+.audit-intro{font-size:12.5px;color:var(--gray600);line-height:1.6;margin-bottom:16px;padding-bottom:14px;border-bottom:1.5px dashed var(--gray100)}
+.audit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.aq{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;background:var(--gray50);border-radius:10px;border:1px solid var(--gray100);transition:background .15s,border-color .15s}
+.aq:hover{background:var(--g50);border-color:var(--g200)}
+.aq-num{width:26px;height:26px;background:var(--g700);color:#fff;border-radius:7px;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.aq p{font-size:12px;color:var(--gray600);line-height:1.5}
+
+/* ═══ REFS ═══ */
+.refs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ref-chip{display:inline-flex;align-items:center;gap:7px;background:var(--white);border:1.5px solid var(--gray200);border-radius:20px;padding:6px 13px;font-size:12px;color:var(--gray600);font-weight:500;transition:border-color .15s}
+.ref-chip:hover{border-color:var(--g400)}
+.ref-chip svg{flex-shrink:0}
+
+/* ═══ FOOTER ═══ */
+.footer{margin-top:32px;text-align:center;padding-top:20px;border-top:1.5px solid var(--gray200)}
+.footer p{font-size:11px;color:var(--gray400);line-height:1.7}
+.footer strong{color:var(--g700)}
+
+/* ═══ PRINT ═══ */
+@media print{
+  @page{size:A4 portrait;margin:10mm 8mm}
+  body{background:#fff}
+  .dl-bar{display:none!important}
+  .page{padding:0;max-width:100%}
+  .hero,.hero *,.pillar,.sgia-card,.prin-card{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .hero{border-radius:12px}
+  .pillars,.sgia-grid,.prin-grid,.audit-grid{display:grid}
+  .flow{flex-wrap:wrap;gap:6px}
+  .fstep{border-radius:8px!important;border:1.5px solid var(--gray100)!important;min-width:140px;flex:1}
+  .farrow{display:none}
+  .pillar,.fstep,.sgia-card,.prin-card,.aq{break-inside:avoid;box-shadow:none!important}
+  .hero-top::before,.hero-top::after{display:none}
+}
+</style>
+</head>
+<body>
+<nav style="background:rgba(42,95,12,.97);padding:0 32px;position:sticky;top:0;z-index:999;box-shadow:0 2px 16px rgba(0,0,0,.2)">
+  <div style="max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px">
+    <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:rgba(255,255,255,.85);font-size:13px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Inicio
+    </a>
+    <div style="display:flex;gap:6px">
+      <a href="cuestionario.html" style="padding:6px 14px;border-radius:7px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);text-decoration:none;font-size:12.5px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif">❓ Cuestionario</a>
+      <a href="checklist.html" style="padding:6px 14px;border-radius:7px;background:#52b520;color:#fff;text-decoration:none;font-size:12.5px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif">✅ Checklist</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── BARRA DESCARGA ── -->
+<div class="dl-bar">
+  <div class="dl-bar-info">
+    <div class="dot"></div>
+    <span>Gestión de Equipos · FSSC 22000 v6 · Requisito 2.5.15</span>
+  </div>
+  <div class="dl-btns">
+    <button class="dl-btn dl-btn-ghost" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Imprimir
+    </button>
+    <button class="dl-btn dl-btn-primary" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Descargar PDF
+    </button>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ══════ HERO ══════ -->
+<div class="hero">
+  <div class="hero-top">
+    <div class="hero-tags">
+      <span class="htag htag-main">2.5.15 · FSSC 22000 v6</span>
+      <span class="htag htag-outline">Diseño higiénico</span>
+      <span class="htag htag-outline">Especificación de compra</span>
+      <span class="htag htag-outline">Gestión de cambios</span>
+      <span class="htag htag-outline">Todas las categorías excepto FII</span>
+    </div>
+    <div class="hero-row">
+      <div class="hero-logo">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <rect x="7" y="4" width="28" height="36" rx="4" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
+          <path d="M13 14h16M13 19h11M13 24h14" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="37" cy="36" r="9" fill="#52b520"/>
+          <path d="M33 36l2.5 2.5L41 31" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="hero-title">
+        <h1>Gestión de Equipos<br>en Inocuidad Alimentaria</h1>
+        <p>Guía de implementación del requisito adicional 2.5.15 del esquema FSSC 22000 v6. Cubre el <strong>diseño higiénico</strong>, la <strong>especificación de compra</strong> y la <strong>gestión de cambios basada en riesgo</strong> para garantizar equipos seguros en toda la cadena alimentaria.</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hstat"><div class="n">2</div><div class="l">Pilares<br>obligatorios</div></div>
+    <div class="hstat"><div class="n">6</div><div class="l">Principios<br>higiénicos</div></div>
+    <div class="hstat"><div class="n">5</div><div class="l">Pasos de<br>instalación</div></div>
+    <div class="hstat"><div class="n">8</div><div class="l">Actualizaciones<br>del SGIA</div></div>
+    <div class="hstat"><div class="n">6</div><div class="l">Preguntas<br>de auditoría</div></div>
+  </div>
+</div>
+
+<!-- ══════ ¿QUÉ ES EQUIPO? ══════ -->
+<div class="sdiv">
+  <div class="sdiv-icon" style="background:var(--g100)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+  </div>
+  <h2>¿Qué se entiende por "equipo"?</h2>
+  <div class="sdiv-line"></div>
+</div>
+
+<div class="def-card">
+  <div class="def-icon">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="1.8" stroke-linecap="round">
+      <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+    </svg>
+  </div>
+  <div class="def-body">
+    <div class="dt">📋 Definición GFSI v2020.1</div>
+    <p><strong>Máquinas y equipos</strong> (incluidas sus partes, componentes, servicios y utensilios), <strong>sistemas de transporte de alimentos</strong> para suministro de ingredientes/empaques, junto con <strong>unidades de almacenamiento y exposición</strong> que permiten la transformación y venta al por menor de alimentos y piensos. El <strong>diseño higiénico</strong> minimiza el riesgo de contaminación <strong>microbiológica, química y física</strong> y garantiza que el equipo resista la limpieza, desinfección e inspección.</p>
+  </div>
+</div>
+
+<div class="alert alert-amber">
+  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--a600)" stroke-width="2.2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  <p>⚠️ <strong>Puntos clave:</strong> Los equipos de <strong>segunda mano</strong> se tratan como "nuevos" y deben cumplir todos los requisitos de este capítulo. El equipo existente <strong>no requiere evaluación retroactiva</strong> a menos que sufra un <strong>cambio significativo</strong>. El mantenimiento rutinario (cambiar fusible, reemplazar correa gastada) <strong>NO</strong> está comprendido en este requisito.</p>
+</div>
+
+<!-- ══════ PRINCIPIOS ══════ -->
+<div class="sdiv">
+  <div class="sdiv-icon" style="background:var(--g100)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+  </div>
+  <h2>6 principios del diseño higiénico</h2>
+  <div class="sdiv-line"></div>
+</div>
+
+<div class="prin-grid">
+  <div class="prin-card">
+    <div class="prin-ic" style="background:var(--g50);border:1.5px solid var(--g200)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
+    <div>
+      <h4>🔍 Accesibilidad</h4>
+      <p>Acceso fácil a todas las partes del equipo para inspección visual y control durante la limpieza</p>
+    </div>
+  </div>
+  <div class="prin-card">
+    <div class="prin-ic" style="background:var(--b50);border:1.5px solid var(--b200)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--b600)" stroke-width="2" stroke-linecap="round"><path d="M12 22a9 9 0 01-9-9c0-4.97 4.03-9 9-9a9 9 0 010 18z"/><path d="M9 12h6M12 9v6"/></svg>
+    </div>
+    <div>
+      <h4>🧹 Facilidad de limpieza</h4>
+      <p>Diseño que permite la remoción total de residuos alimentarios y biofilms sin zonas inaccesibles</p>
+    </div>
+  </div>
+  <div class="prin-card">
+    <div class="prin-ic" style="background:var(--t50);border:1.5px solid var(--t200)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--t600)" stroke-width="2" stroke-linecap="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10"/><path d="M12 8v4l4 2"/></svg>
+    </div>
+    <div>
+      <h4>💧 Facilidad de drenaje</h4>
+      <p>Autodrenante, sin zonas de acumulación de agua o producto que generen contaminación</p>
+    </div>
+  </div>
+  <div class="prin-card">
+    <div class="prin-ic" style="background:var(--a50);border:1.5px solid var(--a200)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--a600)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+    </div>
+    <div>
+      <h4>⚗️ Compatibilidad de materiales</h4>
+      <p>Acero inoxidable y materiales resistentes a químicos de limpieza y compatibles con el alimento</p>
+    </div>
+  </div>
+  <div class="prin-card">
+    <div class="prin-ic" style="background:var(--p50);border:1.5px solid var(--p100)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--p600)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M17 17h4M19 15v4"/></svg>
+    </div>
+    <div>
+      <h4>🚧 Segregación</h4>
+      <p>Evita contaminación cruzada entre zonas y entre productos con distintos alérgenos</p>
+    </div>
+  </div>
+  <div class="prin-card">
+    <div class="prin-ic" style="background:var(--r50);border:1.5px solid var(--r100)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--r600)" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+    </div>
+    <div>
+      <h4>📐 Superficie y geometría</h4>
+      <p>Sin rincones muertos, cantos lisos, soldaduras continuas. Sin tornillos sobre zonas de contacto con producto</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ DOS PILARES ══════ -->
+<div class="sdiv">
+  <div class="sdiv-icon" style="background:var(--g100)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.2" stroke-linecap="round"><path d="M12 22V12M4 6l4-2 4 2 4-2 4 2"/><path d="M12 12l-4-4M12 12l4-4"/></svg>
+  </div>
+  <h2>Dos pilares obligatorios — Requisito 2.5.15</h2>
+  <div class="sdiv-line"></div>
+</div>
+
+<div class="pillars">
+  <!-- PILAR A -->
+  <div class="pillar">
+    <div class="pillar-head ph-green">
+      <div class="pillar-ic pic-green">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M9 12h6M9 16h6M7 8h.01M17 4H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2z"/></svg>
+      </div>
+      <div>
+        <div class="pillar-code pc-green">2.5.15 (a)</div>
+        <h3>Especificación de compra</h3>
+        <div class="sub">Documentar antes de adquirir el equipo</div>
+      </div>
+    </div>
+    <div class="pillar-body">
+      <div class="ri">
+        <div class="ri-dot ri-green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4z"/></svg></div>
+        <p><strong>📄 Diseño higiénico documentado:</strong> Parámetros específicos por tipo de equipo: materiales, geometría, acceso para limpieza, drenaje y facilidad de desmontaje.</p>
+      </div>
+      <div class="ri">
+        <div class="ri-dot ri-green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.5" stroke-linecap="round"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+        <p><strong>🏭 Uso previsto + producto manipulado:</strong> Ej. "freidora de chips de maíz" o "empacadora de carne". Es la base de la evaluación de riesgos de diseño higiénico.</p>
+      </div>
+      <div class="ri">
+        <div class="ri-dot ri-green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+        <p><strong>⚖️ Requisitos legales y del cliente:</strong> Normativa vigente del país de instalación y exigencias específicas de cada cliente.</p>
+      </div>
+      <div class="ri">
+        <div class="ri-dot ri-green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.5" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <p><strong>✅ Evidencia del proveedor ANTES de instalar:</strong> Manual del fabricante comparado con la especificación. Certificados EHEDG, 3-A SSI u otras normas reconocidas.</p>
+      </div>
+      <div class="ri">
+        <div class="ri-dot ri-green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <p><strong>🤝 Acuerdo de nivel de servicio (SLA):</strong> El fabricante debe informar riesgos no eliminables por diseño y proveer manual con instrucciones de operación, limpieza y mantenimiento.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR B -->
+  <div class="pillar">
+    <div class="pillar-head ph-teal">
+      <div class="pillar-ic pic-teal">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 22V12M4 6l4-2 4 2 4-2 4 2"/><path d="M12 12l-4-4M12 12l4-4"/></svg>
+      </div>
+      <div>
+        <div class="pillar-code pc-teal">2.5.15 (b)</div>
+        <h3>Gestión de cambios basada en riesgo</h3>
+        <div class="sub">Nuevos equipos y modificaciones significativas</div>
+      </div>
+    </div>
+    <div class="pillar-body">
+      <div class="ri">
+        <div class="ri-dot ri-teal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t600)" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <p><strong>🗂️ Proceso documentado:</strong> Incluir propietario, fechas previstas, recursos (personal, tiempo, inversión de capital) y estado: en curso / completado. Integrado en el SGIA (cláusula 6.3 ISO 22000:2018).</p>
+      </div>
+      <div class="ri">
+        <div class="ri-dot ri-teal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t600)" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg></div>
+        <p><strong>⚙️ Cambios significativos:</strong> Ej. añadir cinta transportadora extra, instalar bandeja metálica bajo línea. <em>No cubre</em> mantenimiento rutinario (cambiar fusible, sustituir cinta deshilachada).</p>
+      </div>
+      <div class="ri">
+        <div class="ri-dot ri-teal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t600)" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div>
+        <p><strong>👥 Equipo multidisciplinar:</strong> Calidad, Ingeniería y Mantenimiento. Competencias en microbiología, alérgenos, diseño higiénico, requisitos legales y análisis de peligros.</p>
+      </div>
+      <div class="ri">
+        <div class="ri-dot ri-teal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t600)" stroke-width="2.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <p><strong>🔬 Evaluación de sistemas existentes:</strong> ¿El cambio modifica o aumenta riesgos del análisis de peligros? ¿Introduce nuevos peligros biológicos, químicos o físicos? Ajustar medidas de control.</p>
+      </div>
+      <div class="ri">
+        <div class="ri-dot ri-teal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t600)" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <p><strong>📑 Evidencia de puesta en marcha satisfactoria:</strong> Documentación del FAT + SAT + validación de limpieza archivados como parte del registro formal de cambios.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ CICLO 5 PASOS ══════ -->
+<div class="sdiv">
+  <div class="sdiv-icon" style="background:var(--g100)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.2" stroke-linecap="round"><polyline points="5 12 12 5 19 12"/><path d="M12 5v14"/></svg>
+  </div>
+  <h2>Ciclo de instalación y puesta en servicio — 5 pasos</h2>
+  <div class="sdiv-line"></div>
+</div>
+
+<div class="flow">
+  <div class="fstep">
+    <div class="fstep-top">
+      <div class="fnum">1</div>
+      <div class="fic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4z"/></svg></div>
+    </div>
+    <h4>📋 Especificación y evaluación de riesgos</h4>
+    <p>Definir uso previsto, identificar peligros, adoptar principios de diseño higiénico. Evaluación de riesgos documentada.</p>
+    <span class="fbadge fb-green">Pre-compra</span>
+  </div>
+  <div class="farrow">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </div>
+  <div class="fstep">
+    <div class="fstep-top">
+      <div class="fnum">2</div>
+      <div class="fic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+    </div>
+    <h4>🏗️ FAT — Prueba en fábrica del proveedor</h4>
+    <p>Verificar en las instalaciones del proveedor que el equipo cumple la especificación antes del envío.</p>
+    <span class="fbadge fb-blue">FAT</span>
+  </div>
+  <div class="farrow">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </div>
+  <div class="fstep">
+    <div class="fstep-top">
+      <div class="fnum">3</div>
+      <div class="fic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+    </div>
+    <h4>🔧 SAT — Prueba de aceptación in situ</h4>
+    <p>Verificar parámetros funcionales y de higiene en condiciones reales de operación en la propia planta.</p>
+    <span class="fbadge fb-amber">SAT</span>
+  </div>
+  <div class="farrow">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </div>
+  <div class="fstep">
+    <div class="fstep-top">
+      <div class="fnum">4</div>
+      <div class="fic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+    </div>
+    <h4>🧪 Validación de limpieza</h4>
+    <p>Confirmar con datos objetivos que el equipo puede limpiarse completamente. Completar ANTES de la producción comercial.</p>
+    <span class="fbadge fb-green">Obligatorio</span>
+  </div>
+  <div class="farrow">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </div>
+  <div class="fstep">
+    <div class="fstep-top">
+      <div class="fnum">5</div>
+      <div class="fic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.2" stroke-linecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+    </div>
+    <h4>🔄 Actualización del SGIA</h4>
+    <p>Revisar análisis de peligros, limpieza, mantenimiento, monitoreo ambiental, alérgenos y formación.</p>
+    <span class="fbadge fb-green">Post-instalación</span>
+  </div>
+</div>
+
+<!-- ══════ SGIA ══════ -->
+<div class="sdiv" style="margin-top:20px">
+  <div class="sdiv-icon" style="background:var(--t100)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--t800)" stroke-width="2.2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  </div>
+  <h2>8 actualizaciones del SGIA tras instalación o cambio de equipo</h2>
+  <div class="sdiv-line"></div>
+</div>
+
+<div class="sgia-grid">
+  <div class="sgia-card">
+    <div class="sgia-ic" style="background:var(--r50);border:1.5px solid var(--r100)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--r600)" stroke-width="1.8" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <h4>⚠️ Análisis de peligros</h4>
+    <p>¿Nuevos riesgos físicos, químicos o biológicos introducidos por el equipo?</p>
+  </div>
+  <div class="sgia-card">
+    <div class="sgia-ic" style="background:var(--b50);border:1.5px solid var(--b100)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--b600)" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
+    </div>
+    <h4>🧹 Limpieza y sanitización</h4>
+    <p>Actualizar procedimientos, cronogramas y registros de limpieza</p>
+  </div>
+  <div class="sgia-card">
+    <div class="sgia-ic" style="background:var(--a50);border:1.5px solid var(--a100)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--a600)" stroke-width="1.8" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+    </div>
+    <h4>🔧 Mantenimiento</h4>
+    <p>Ajustar cronogramas, comprobaciones y recursos ante posibles fallas</p>
+  </div>
+  <div class="sgia-card">
+    <div class="sgia-ic" style="background:var(--g50);border:1.5px solid var(--g200)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="1.8" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    </div>
+    <h4>📡 Monitoreo ambiental</h4>
+    <p>¿El flujo del equipo afecta los puntos de muestreo ambiental?</p>
+  </div>
+  <div class="sgia-card">
+    <div class="sgia-ic" style="background:var(--p50);border:1.5px solid var(--p100)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--p600)" stroke-width="1.8" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    </div>
+    <h4>🌿 Gestión de alérgenos</h4>
+    <p>¿El equipo afecta flujos o riesgos de contaminación cruzada por alérgenos?</p>
+  </div>
+  <div class="sgia-card">
+    <div class="sgia-ic" style="background:var(--t50);border:1.5px solid var(--t200)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--t600)" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+    </div>
+    <h4>👩‍🏫 Formación del personal</h4>
+    <p>Capacitar en nuevos procedimientos operativos y de higiene</p>
+  </div>
+  <div class="sgia-card">
+    <div class="sgia-ic" style="background:var(--b50);border:1.5px solid var(--b100)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--b600)" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+    </div>
+    <h4>📋 Registros de producción</h4>
+    <p>Actualizar si cambian el proceso o los parámetros de operación</p>
+  </div>
+  <div class="sgia-card">
+    <div class="sgia-ic" style="background:var(--g50);border:1.5px solid var(--g200)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </div>
+    <h4>✔️ Verificación del SGIA</h4>
+    <p>Actualizar cualquier otra actividad de verificación pertinente del sistema</p>
+  </div>
+</div>
+
+<!-- ══════ AUDITORES ══════ -->
+<div class="sdiv">
+  <div class="sdiv-icon" style="background:var(--a100)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--a800)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  </div>
+  <h2>Preguntas clave del auditor — Requisito 2.5.15</h2>
+  <div class="sdiv-line"></div>
+</div>
+
+<div class="audit-wrap">
+  <div class="audit-header">
+    <div class="aic">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    </div>
+    <div>
+      <h3>Lista de verificación para auditoría</h3>
+      <p>Cada respuesta debe estar respaldada por evidencia documental</p>
+    </div>
+  </div>
+  <div class="audit-intro">
+    Lista no exhaustiva de preguntas que los auditores utilizan para evaluar el cumplimiento del requisito adicional 2.5.15 en una auditoría de certificación FSSC 22000 v6. Se requiere evidencia objetiva para cada punto.
+  </div>
+  <div class="audit-grid">
+    <div class="aq">
+      <div class="aq-num">P1</div>
+      <p>📄 ¿Se han establecido y documentado los requisitos de compra de todos los equipos nuevos y son conocidos por el personal responsable?</p>
+    </div>
+    <div class="aq">
+      <div class="aq-num">P2</div>
+      <p>📑 ¿Se dispone de especificaciones de compra, informes de puesta en servicio, manuales de usuario y documentos de certificación del diseño higiénico?</p>
+    </div>
+    <div class="aq">
+      <div class="aq-num">P3</div>
+      <p>⚖️ ¿El diseño higiénico del equipo aborda los productos manipulados y los requisitos legales y del cliente?</p>
+    </div>
+    <div class="aq">
+      <div class="aq-num">P4</div>
+      <p>🔍 ¿Se ha identificado claramente el uso previsto y se han determinado los riesgos de inocuidad relacionados con el equipo?</p>
+    </div>
+    <div class="aq">
+      <div class="aq-num">P5</div>
+      <p>🔄 ¿Se ha establecido un proceso de gestión de cambios basado en riesgo para nuevos equipos o cambios en equipos existentes?</p>
+    </div>
+    <div class="aq">
+      <div class="aq-num">P6</div>
+      <p>✅ ¿Se han actualizado el SGIA, los cronogramas de limpieza y mantenimiento, el monitoreo ambiental y la documentación de formación?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ REFERENCIAS ══════ -->
+<div class="sdiv">
+  <div class="sdiv-icon" style="background:var(--gray100)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gray600)" stroke-width="2.2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+  </div>
+  <h2>Organismos y normas de referencia</h2>
+  <div class="sdiv-line"></div>
+</div>
+
+<div class="refs">
+  <div class="ref-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/></svg>EHEDG — Grupo Europeo de Ingeniería Higiénica y Diseño</div>
+  <div class="ref-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t600)" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/></svg>3-A SSI — Sanitary Standards Inc.</div>
+  <div class="ref-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--b600)" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/></svg>ISO 14159:2002 — Requisitos de higiene para diseño de máquinas</div>
+  <div class="ref-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--a600)" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/></svg>EN 1672-2:2020 — Máquinas para procesado de alimentos</div>
+  <div class="ref-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--gray400)" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/></svg>ISO 22000:2018 — Cláusulas 8.2.4 y 6.3</div>
+  <div class="ref-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--gray400)" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/></svg>NAMI — North American Meat Institute</div>
+  <div class="ref-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--gray400)" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/></svg>GFSI Benchmarking Requirements v2020.1</div>
+</div>
+
+<!-- ══════ FOOTER ══════ -->
+<div class="footer">
+  <p>Basado en el <strong>Documento de Orientación oficial FSSC 22000 v6 — Gestión de Equipos (Requisito adicional 2.5.15)</strong> · Versión 1 · Septiembre 2023<br>
+  Para uso interno de capacitación y referencia. Consulte siempre el esquema oficial FSSC 22000 v6 vigente.<br>
+  <strong>Para guardar como PDF:</strong> Usar el botón "Descargar PDF" → Seleccionar orientación <strong>Vertical (Retrato)</strong>, tamaño <strong>A4</strong>, márgenes <strong>mínimos</strong> y activar la opción <strong>"Gráficos de fondo"</strong> para conservar todos los colores e iconos.</p>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>

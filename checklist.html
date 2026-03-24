@@ -159,7 +159,7 @@ body{font-family:var(--font);background:var(--page);color:var(--gray900);line-he
 /* ─── PRINT/ACTIONS ─── */
 @media print{
   @page{size:A4 portrait;margin:10mm 8mm}
-
+}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:900px){
@@ -239,6 +239,43 @@ body{font-family:var(--font);background:var(--page);color:var(--gray900);line-he
   .ci-code { display:none; }
 }
 
+/* --- 100% RESPONSIVE ENHANCEMENTS --- */
+@media (max-width: 768px) {
+  .page { padding: 16px 10px 40px; }
+  .action-bar { flex-direction: column; align-items: stretch; text-align: center; padding: 12px; height: auto; }
+  .ab-btns { justify-content: center; width: 100%; flex-wrap: wrap; }
+  .ab-btn { flex: 1; justify-content: center; text-align: center; min-width: 120px; }
+  .hdr-row { flex-direction: column; align-items: center; text-align: center; }
+  .hdr-txt h1 { font-size: 24px; }
+  .hdr-foot { flex-direction: column; gap: 8px; }
+  .hstat { width: 100%; border-bottom: 1px solid rgba(255,255,255,.1); padding-bottom: 8px; }
+  .hstat:last-child { border-bottom: none; }
+  .score-bars { width: 100%; }
+  .sbar-row { flex-direction: column; align-items: stretch; gap: 6px; margin-bottom: 8px; }
+  .sbar-label, .sbar-pct { width: 100%; font-size: 14px; text-align: left; }
+  .sbar-pct { text-align: right; margin-top: -24px; pointer-events: none; }
+  .score-counters { flex-direction: column; gap: 10px; width: 100%; }
+  .sc-item { width: 100%; }
+  .form-grid, .form-grid-2 { grid-template-columns: 1fr; }
+  .finput, .fselect, .ftextarea { font-size: 16px !important; }
+  .tipo-btns { flex-direction: column; }
+  .tipo-btn { width: 100%; }
+  .ci-body { flex-direction: column; align-items: stretch; gap: 12px; padding: 14px; }
+  .ci-code { display: none; }
+  .ci-radios { flex-direction: column; align-items: stretch; gap: 8px; border-top: none; padding-top: 0; }
+  .cir-btn { width: 100%; justify-content: center; padding: 10px; font-size: 14px; }
+  .score-panel { flex-direction: column; text-align: center; }
+  .score-meta { width: 100%; }
+  .score-circle-wrap { margin: 0 auto; }
+  .obs-card .form-grid-2, .obs-card .form-grid { grid-template-columns: 1fr; }
+  .sdiv { flex-wrap: wrap; text-align: left; }
+  .sdiv h3 { white-space: normal; max-width: 100%; font-size: 12px; }
+  .sdiv-line { display: none; }
+}
+@media (max-width: 480px) {
+  .hdr-txt h1 { font-size: 20px; }
+  .ab-btn-danger { display: flex; }
+}
 </style>
 </head>
 <body>
